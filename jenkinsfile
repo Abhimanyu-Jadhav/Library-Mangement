@@ -29,6 +29,19 @@ pipeline{
                 sh 'mvn test'
             }
         }
+
+         stage('Sonar Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh '''
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=library-management \
+                    -Dsonar.host.url=http://52.66.239.229:9000 \
+                    -Dsonar.login=$SONAR_AUTH_TOKEN
+                    '''
+                }
+            }
+        }
         
     }
 }
