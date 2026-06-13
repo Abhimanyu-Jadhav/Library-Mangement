@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_AUTH_TOKEN = 'squ_909a71371a934f3cf66736d68fdca75582a13f8f'
+        SONAR_USER_TOKEN = 'squ_909a71371a934f3cf66736d68fdca75582a13f8f'
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
                     mvn sonar:sonar \
                     -Dsonar.projectKey=library-management \
                     -Dsonar.host.url=http://52.66.239.229:9000 \
-                    -Dsonar.token=$SONAR_AUTH_TOKEN
+                    -Dsonar.token=$SONAR_USER_TOKEN
                     '''
                 }
             }
