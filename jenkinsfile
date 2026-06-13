@@ -4,11 +4,30 @@ pipeline{
 
     stages{
 
-        stage(){
+        stage("Check out code"){
                  
                  steps{
-                    
+
+                    git branch : 'main' ,
+                    url: 'https://github.com/Abhimanyu-Jadhav/Library-Mangement.git'
+
                  }
+        }
+
+        stage("Build"){
+
+            steps{
+
+                sh 'mvn clean package'
+            }
+        }
+
+        stage("Unit test"){
+
+            steps{
+
+                sh 'mvn test'
+            }
         }
     }
 }
