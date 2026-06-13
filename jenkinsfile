@@ -1,36 +1,30 @@
-pipeline{
-
+pipeline {
     agent any
 
-    stages{
-
-        stage("Check out code"){
-                 
-                 steps{
-
-                    git branch : 'main' ,
-                    url: 'https://github.com/Abhimanyu-Jadhav/Library-Mangement.git'
-
-                 }
+    stages {
+        stage('Check out code') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/Abhimanyu-Jadhav/Library-Mangement.git']]
+                ])
+            }
         }
 
-        stage("Build"){
-
-            steps{
-
+        stage('Build') {
+            steps {
                 sh 'mvn clean package'
             }
         }
 
-    stage("Unit test"){
-
-            steps{
-
+        stage('Unit test') {
+            steps {
                 sh 'mvn test'
             }
         }
 
-         stage('Sonar Analysis') {
+        stage('Sonar Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh '''
@@ -42,6 +36,5 @@ pipeline{
                 }
             }
         }
-        
     }
 }
